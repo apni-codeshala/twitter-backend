@@ -1,4 +1,4 @@
-const Hashtag = require("../models/hashtag.model");
+import Hashtag from "../models/hashtag.model.js";
 
 class HashtagRepository {
   async create(data) {
@@ -7,6 +7,7 @@ class HashtagRepository {
       return hashtag;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
@@ -16,6 +17,7 @@ class HashtagRepository {
       return hashtag;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
@@ -25,17 +27,32 @@ class HashtagRepository {
       return result;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
-  async update(hashtagId, data) {
+  async findByName(titleList) {
     try {
-      const result = await Hashtag.findByIdAndUpdate(hashtagId, data);
+      const result = await Hashtag.find({
+        title: titleList,
+      }).select("title - _id");
       return result;
-    } catch {
+    } catch (error) {
       console.log(error);
+      return error;
+    }
+  }
+
+  async bulkCreate(data) {
+    // In place of data => we have to pass an array
+    try {
+      const tags = await Hashtag.insertMany(data);
+      return tags;
+    } catch (error) {
+      console / log(error);
+      return error;
     }
   }
 }
 
-module.exports = HashtagRepository;
+export default HashtagRepository;

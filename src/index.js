@@ -1,7 +1,7 @@
-const express = require("express");
-const dotenv = require("dotenv");
+import express from "express";
+import dotenv from "dotenv";
 
-const connect = require("./cofig/databse");
+import connect from "./cofig/databse.js";
 
 const app = express();
 dotenv.config();
@@ -9,6 +9,6 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async () => {
-  console.log("Server started on PORT: 3000");
+  console.log("Server started on PORT:", PORT);
   await connect();
 });

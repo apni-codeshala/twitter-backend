@@ -1,4 +1,4 @@
-const Tweet = require("../models/tweet.model");
+import Tweet from "../models/tweet.model.js";
 
 class TweetRepository {
   async create(data) {
@@ -7,6 +7,7 @@ class TweetRepository {
       return tweet;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
@@ -16,6 +17,7 @@ class TweetRepository {
       return tweet;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
@@ -25,6 +27,7 @@ class TweetRepository {
       return result;
     } catch (error) {
       console.group(error);
+      return error;
     }
   }
 
@@ -34,6 +37,7 @@ class TweetRepository {
       return result;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
@@ -45,6 +49,7 @@ class TweetRepository {
       return tweet;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 
@@ -54,8 +59,9 @@ class TweetRepository {
       return tweet;
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
 }
 
-module.exports = TweetRepository;
+export default TweetRepository;
