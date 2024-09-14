@@ -5,7 +5,7 @@ const hashtagSchema = new mongoose.Schema(
     title: {
       type: String,
       require: true,
-      unique: true,
+      index: { unique: true },
     },
     tweets: [
       {
