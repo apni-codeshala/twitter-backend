@@ -14,13 +14,9 @@ class LikeService {
   //api/v1/likes/toggl?id=modelid&type=Tweet
   async toggleLike(modelId, modelType, userId) {
     if (modelType == "Tweet") {
-      var likeable = await this.tweetRepository
-        .get(modelId)
-        .populate({ path: "Likes" });
+      var likeable = await this.tweetRepository.find(modelId);
     } else if (modelType == "Comment") {
-      var likeable = await this.commentRepository
-        .get(modelId)
-        .populate({ path: "Likes" });
+      var likeable = await this.commentRepository.find(modelId);
     } else {
       throw new Error("Unknown model type");
     }
@@ -31,12 +27,14 @@ class LikeService {
       onModel: modelType,
       likeable: modelId,
     });
+
+    console.log(exists);
     if (exists) {
       likeable.likes.pull(exists.id);
       // save by removing like of tweet
       await likeable.save();
       // remove this like history from like model
-      await exists.remove();
+      await this.likeRepository.destroy(exists.id);
       var isAdded = false;
     } else {
       // If like not exist than we have to create a new like
