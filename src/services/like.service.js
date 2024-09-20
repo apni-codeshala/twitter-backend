@@ -1,9 +1,14 @@
-import { LikeRepository, TweetRepository } from "../repository/index.js";
+import {
+  LikeRepository,
+  TweetRepository,
+  CommentRespository,
+} from "../repository/index.js";
 
 class LikeService {
   constructor() {
     this.likeRepository = new LikeRepository();
     this.tweetRepository = new TweetRepository();
+    this.commentRepository = new CommentRespository();
   }
 
   //api/v1/likes/toggl?id=modelid&type=Tweet
@@ -13,7 +18,9 @@ class LikeService {
         .get(modelId)
         .populate({ path: "Likes" });
     } else if (modelType == "Comment") {
-      // TODO
+      var likeable = await this.commentRepository
+        .get(modelId)
+        .populate({ path: "Likes" });
     } else {
       throw new Error("Unknown model type");
     }

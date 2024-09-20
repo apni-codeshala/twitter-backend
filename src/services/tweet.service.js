@@ -43,6 +43,16 @@ class TweetService {
       return error;
     }
   }
+
+  async get(id) {
+    try {
+      const response = await this.tweetRepository.get(id);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
 }
 
 export default TweetService;
