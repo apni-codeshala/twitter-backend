@@ -1,20 +1,25 @@
+import upload from "../cofig/file-upload-s3-config.js";
 import UserService from "../services/user.service.js";
 
+const singleUploader = upload.single("image");
 const userService = new UserService();
 
 export const signup = async (req, res) => {
   try {
-    const response = await userService.signUp({
-      email: req.body.email,
-      password: req.body.password,
-      name: req.body.name,
-    });
-    return res.status(200).json({
-      success: true,
-      message: "Successfully create a new user",
-      data: response,
-      err: {},
-    });
+    singleUploader(req, res, async function (err, data) {
+      if (err) {
+        return res.status(500).json({error: err});
+      }
+      const payload = {...req.body};
+      payload.profilePic = req.file.location;
+      const response = await userService.signUp(payload);
+      return res.status(200).json({
+        success: true,
+        message: "Successfully create a new user",
+        data: response,
+        err: {},
+      });
+    })
   } catch (error) {
     console.log(error);
     return res.status(500).json({
