@@ -18,7 +18,7 @@ passportAuth(passport);
 
 app.use("/api", apiRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3010;
 
 app.listen(PORT, async () => {
   console.log("Server started on PORT:", PORT);

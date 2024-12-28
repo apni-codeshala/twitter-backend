@@ -53,3 +53,27 @@ export const signin = async (req, res) => {
     });
   }
 };
+
+export const verifyToken = async (req, res) => {
+  try {
+    if(req.user) {
+      return res.status(200).json({
+        success: true,
+        message: 'User is authenticted',
+        data: {
+          name: req.user.name,
+          email: req.user.email
+        },
+        err: {}
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      data: {},
+      err: error,
+    });
+  }
+}
